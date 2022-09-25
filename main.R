@@ -46,16 +46,32 @@ ttype=rbind(ttype,data.frame(net=type,tmod))
 write.csv(ttype,file = paste0(directory,'/','all_index.csv'),row.names = F)
 
 
-set.seed(123)
-modspls=list()
+set.seed(1285)
+modspls=list();chazhipls=list()
 for (mod in c('Tho','Mat','CSR','Str','HC')){
   make_mod(mod = mod)->mod1
   modspls[[paste0(mod,'1')]]=plot_mod(mod1)[[1]]+labs(subtitle = mod)+scale_size(range=c(0.5,2))+theme_pubr(legend = 'right')
   modspls[[paste0(mod,'2')]]=plot_mod(mod1)[[2]]+labs(subtitle = mod)+scale_size(range=c(0.5,2))+theme_pubr(legend = 'right')
   
+  make_net(mod1,type = 'CS')->tree_net
+  p<-graph_from_data_frame(tree_net,directed = F)
+  plants.coords<-coords(mod1)
+  node<-unique(c(tree_net$Source,tree_net$Target))
+  plants.coords[rownames(plants.coords) %in% node,]->coo
+  coo$mdegree<-as.vector(degree(p))
+  coo$betweennesssT<-as.vector(betweenness(p,directed = F,normalized = T))
+  coo$betweennesss<-as.vector(betweenness(p))
+  coo$closeness<-as.vector(closeness(p))
+  write.csv(coo,file = paste0('simu_data/interpolation/','/',mod,'_coo.csv'),row.names = F)
+  chazhipls[[paste0(mod,'1')]]=chazhiplot(coo)+labs(subtitle = mod)+theme_pubr(legend = 'right')
+  chazhipls[[paste0(mod,'2')]]=chazhiplot2(coo)+labs(subtitle = mod)+theme_pubr(legend = 'right')
 }
+for (i in seq(1,9,2)){
+chazhipls[[i]]=chazhipls[[i]]+ scale_fill_gradient(name="mdegree", low = "#3EF809", high = "#F15716")}
 cowplot::plot_grid(plotlist = modspls,align = 'hv',labels = 'auto',nrow = 5,label_size = 14)%>%
-  ggsave('figures/mods.pdf',plot = .,width =9,height = 16 )
+  ggsave('figures/figS5.pdf',plot = .,width =9,height = 16 )
+cowplot::plot_grid(plotlist = chazhipls,align = 'hv',labels = 'auto',nrow = 5,label_size = 14)%>%
+  ggsave('figures/figS6.pdf',plot = .,width =9,height = 16 )
 
 pdf('figures/fig2.pdf',width = 20,height = 12)
 graphics::layout(matrix(1:15,3,5,byrow=F))
@@ -399,7 +415,7 @@ dat3<-read.csv('case_data/example_case.csv')
 to.ppp(dat3)->case_dat
 plot_mod(case_dat)
 
-net_analyse(case_dat,res_dir = './case_data/net_analyse_res/',n_simu = 20)
+net_analyse(case_dat,res_dir = './case_data/net_analyse_res199/',n_simu = 199)
 
 #2.spatial pattern
 case_L <- envelope(case_dat, Lest)
@@ -444,9 +460,9 @@ p2<-chazhiplot2(coo)
 
 cowplot::plot_grid(p1,p2,align = 'hv',nrow = 1)%>%ggsave(filename = 'case_data/interpolation.pdf',plot = .,width = 9,height = 3.2)
 
-nep1<-~{par(mar=c(0,0,1,0),mfcol=c(1,3)); plot_net(case_dat,'CS');plot_net(case_dat,'CL'); plot_net(case_dat,'WCL')}
-cowplot::plot_grid(nep1) %>%ggsave(filename = 'rew.pdf',device = 'pdf',width = 9,height = 4)
-
+nep1<-~{par(mar=c(1,1,2,1),mfcol=c(1,3)); plot_net(case_dat,'CS');plot_net(case_dat,'CL'); plot_net(case_dat,'WCL')}
+cp2<-cowplot::plot_grid(plot_mod(case_dat)[[1]]+theme_pubr(legend = 'none'),sp1,sp2,nrow = 1,align = 'h',labels = c('b','c','d'))
+cowplot::plot_grid(nep1,cp2,ncol = 1,labels = 'a') %>%ggsave(filename = 'rew.pdf',device = 'pdf',width = 12,height = 8)                  
 cowplot::plot_grid(plot_mod(case_dat)[[1]],plot_mod(case_dat)[[2]],sp1,sp2,nrow = 3,labels = 'auto')%>%
   ggsave('figures/fig6.pdf',plot = .,width = 8,height = 10)
 #------------Test parameters--------------

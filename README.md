@@ -22,3 +22,27 @@ library(ggpubr)
 library(RColorBrewer)
 ```
 
+Before you construct models, you should set the parameters:
+```ground <- owin(xrange = c(0, 200), yrange = c(0,200)) #set the investigation area
+max_crown <- 5
+min_crown <- 2
+lambda <- 0.015 #intensity
+radius <- 5  #Diffusion radius
+HC_R<-4 #HC model
+ave_offspring_per_cluster <- 3
+```
+
+Use `net_analyses`:
+```
+dat3<-read.csv('case_data/example_case.csv')
+to.ppp(dat3)->case_dat
+plot_mod(case_dat)
+
+net_analyse(case_dat,res_dir = './case_data/net_analyse_res/',n_simu = 30)
+```
+
++ visilzation
+![](./figures/fig6.png 'result')
++ final result   
+we can tell which process major in the construction of spatial structure.
+![](./figures/fig7.png 'result')
