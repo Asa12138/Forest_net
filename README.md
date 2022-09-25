@@ -41,7 +41,7 @@ plot_mod(case_dat)
 net_analyse(case_dat,res_dir = './case_data/net_analyse_res/',n_simu = 30)
 ```
 
-+ visilzation
++ visualization
 ![](./figures/fig6.png 'result')
 + final result   
 we can tell which process major in the construction of spatial structure.
