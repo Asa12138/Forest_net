@@ -1,5 +1,5 @@
 # Forest_net
- Study on the Spatial Structure of Forests from the Perspective of Network  
+Study on the Spatial Structure of Forests from the Perspective of Network  
 authors: Peng Chen, Wu Haoran
 ![](./figures/fig1.png "summary")
 ## Funtions
@@ -41,19 +41,13 @@ plot_mod(case_dat)
 net_analyse(case_dat,res_dir = './case_data/net_analyse_res/',n_simu = 30)
 ```
 
-<<<<<<< Updated upstream
-+ visualization
-=======
 ## visualization
->>>>>>> Stashed changes
 ![](./figures/fig6.png 'result')
 ## final result   
 we can tell which process major in the construction of spatial structure.
 ![](./figures/fig7.png 'result')
-<<<<<<< Updated upstream
 =======
 ## Cite
 You can find more on our publication: [Rethinking the complexity and uncertainty of spatial networks applied to forest ecology](https://www.nature.com/articles/s41598-022-16485-9)     
 Please cite:     
 Wu, H.-R., Peng, C. & Chen, M. Rethinking the complexity and uncertainty of spatial networks applied to forest ecology. Sci Rep 12, 15917 (2022).
->>>>>>> Stashed changes
