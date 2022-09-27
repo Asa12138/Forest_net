@@ -43,10 +43,9 @@ net_analyse(case_dat,res_dir = './case_data/net_analyse_res/',n_simu = 30)
 
 ## visualization
 ![](./figures/fig6.png 'result')
-## final result   
-we can tell which process major in the construction of spatial structure.
+## final result  
 ![](./figures/fig7.png 'result')
-=======
+we can tell which process major in the construction of spatial structure.
 ## Cite
 You can find more on our publication: [Rethinking the complexity and uncertainty of spatial networks applied to forest ecology](https://www.nature.com/articles/s41598-022-16485-9)     
 Please cite:     

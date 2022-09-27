@@ -15,6 +15,14 @@ radius <- 5  #Diffusion radius
 HC_R<-4 #HC model
 ave_offspring_per_cluster <- 3
 
+type='WCL'
+mod="Mat"
+make_mod(mod = mod)->mod1
+plot_mod(mod1)
+make_net(mod1,type = type)->tree_net
+net_par(tree_net)
+plot_net(mod1,type = "WCL")
+
 #------------Monte-Carlo simulations--------
 type='WCL';#'CS'/'CL'/'WCL'
 
